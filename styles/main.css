@@ -1,0 +1,35 @@
+.music-btn{
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    border: 1px solid rgba(240,180,41,.4);
+    background: rgba(0,0,0,.55);
+    backdrop-filter: blur(14px);
+    color: #f0b429;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 9999;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    transition:.3s;
+    box-shadow:
+        0 0 20px rgba(193,18,31,.35),
+        inset 0 0 12px rgba(255,255,255,.05);
+}
+
+.music-btn:hover{
+    transform:scale(1.1);
+    background:rgba(193,18,31,.35);
+    box-shadow:
+        0 0 30px rgba(240,180,41,.35);
+}
+
+.music-btn:active{
+    transform:scale(.95);
+}

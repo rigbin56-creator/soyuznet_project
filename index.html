@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family==Orbitron:wght@400;600;700&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="icon" href="assets/images/soviet-icon.webp" type="image/webp">
 
   <style>
     :root {
@@ -836,7 +838,32 @@
     document.getElementById('langToggle').textContent = spanish ? 'РУССКИЙ' : 'ESPAÑOL';
   });
 
+//  extra: music controller
+window.addEventListener("DOMContentLoaded", () => {
+
+    const music = document.getElementById("bgMusic");
+    const musicButton = document.getElementById("musicButton");
+
+    musicButton.addEventListener("click", () => {
+        if (music.paused) {
+            music.play();
+            musicButton.textContent = "⏸";
+        } else {
+            music.pause();
+            musicButton.textContent = "▶";
+        }
+    });
+
+});
+
 </script>
+
+<audio id="bgMusic" loop src="assets/audio/Orchestra_Waltz.mp3">
+</audio>
+
+<button id="musicButton" class="music-btn" title="Música">
+    ▶
+</button>
 
 </body>
 </html>
