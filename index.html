@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>СОЮЗNET</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family==Orbitron:wght@400;600;700&family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #090909;
+      --card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08);
+      --text: #f1f1f1;
+      --red: #c1121f;
+      --gold: #f0b429;
+      --glass: blur(18px);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top, rgba(193,18,31,0.22), transparent 40%),
+        linear-gradient(to bottom, #070707, #101010);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.02),
+        rgba(255,255,255,0.02) 1px,
+        transparent 2px,
+        transparent 4px
+      );
+      mix-blend-mode: soft-light;
+      opacity: 0.35;
+      pointer-events: none;
+      animation: crt 8s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes crt {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(4px); }
+    }
+
+    .floating-particles {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-20vh);
+        opacity: 0;
+      }
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: var(--glass);
+      background: rgba(0,0,0,0.5);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav {
+      width: min(1400px, 92%);
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-shadow: 0 0 20px rgba(240,180,41,0.5);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .nav-links a,
+    .lang-btn {
+      text-decoration: none;
+      color: white;
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 999px;
+      transition: 0.3s;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+    }
+
+    .nav-links a:hover,
+    .lang-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(240,180,41,0.5);
+      background: rgba(193,18,31,0.2);
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 120px 5%;
+      z-index: 2;
+    }
+
+    .hero-content {
+      max-width: 1100px;
+      text-align: center;
+    }
+
+    .hero-subtitle {
+      color: var(--gold);
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      opacity: 0.8;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-family: 'Orbitron', sans-serif;
+      line-height: 1;
+      margin-bottom: 24px;
+      text-shadow:
+        0 0 20px rgba(255,255,255,0.08),
+        0 0 50px rgba(193,18,31,0.3);
+    }
+
+    .hero p {
+      max-width: 850px;
+      margin: auto;
+      line-height: 1.8;
+      opacity: 0.85;
+      font-size: 1.1rem;
+    }
+
+    .hero-buttons {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 16px 28px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      text-decoration: none;
+      color: white;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      transition: 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.08), transparent);
+      transform: translateX(-100%);
+      transition: 0.5s;
+    }
+
+    .btn:hover::before {
+      transform: translateX(100%);
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+      border-color: rgba(240,180,41,0.5);
+      box-shadow: 0 10px 30px rgba(193,18,31,0.25);
+    }
+
+    .section {
+      width: min(1400px, 92%);
+      margin: auto;
+      padding: 120px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 4rem);
+      margin-bottom: 18px;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .section-desc {
+      opacity: 0.75;
+      max-width: 800px;
+      line-height: 1.8;
+      margin-bottom: 60px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+    }
+
+    .card {
+      background:
+        linear-gradient(to bottom right, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 32px;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      transition: 0.4s cubic-bezier(.2,.8,.2,1);
+      position: relative;
+      box-shadow:
+        inset 0 0 30px rgba(255,255,255,0.02),
+        0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.06), transparent);
+      transform: translateX(-120%);
+      transition: 0.8s;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-12px) scale(1.02);
+      border-color: rgba(240,180,41,0.3);
+      box-shadow:
+        0 25px 70px rgba(0,0,0,0.45),
+        0 0 40px rgba(193,18,31,0.12);
+    }
+
+    .card:hover::before {
+      transform: translateX(120%);
+    }
+
+    .card-image {
+      height: 220px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .card-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    }
+
+    .card-content {
+      padding: 24px;
+    }
+
+    .card-content h3 {
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    .card-content p {
+      line-height: 1.7;
+      opacity: 0.8;
+      font-size: 0.95rem;
+    }
+
+    .ads-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .ad {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      min-height: 360px;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid var(--border);
+      transition: 0.35s;
+    }
+
+    .ad:hover {
+      transform: scale(1.02);
+    }
+
+    .ad::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.15));
+    }
+
+    .ad-content {
+      position: absolute;
+      bottom: 0;
+      padding: 26px;
+      z-index: 2;
+    }
+
+    .ad-tag {
+      display: inline-block;
+      padding: 6px 10px;
+      background: rgba(193,18,31,0.3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      margin-bottom: 12px;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+    }
+
+    .map-container {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 28px;
+    }
+
+    .map {
+      background:
+        radial-gradient(circle at top left, rgba(193,18,31,0.22), transparent 40%),
+        linear-gradient(to bottom right, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 34px;
+      padding: 40px;
+      min-height: 640px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      box-shadow:
+        inset 0 0 80px rgba(255,255,255,0.02),
+        0 30px 80px rgba(0,0,0,0.45);
+    }
+
+    .map::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, rgba(240,180,41,0.08), transparent 60%),
+        repeating-linear-gradient(
+          to right,
+          rgba(255,255,255,0.02),
+          rgba(255,255,255,0.02) 1px,
+          transparent 1px,
+          transparent 60px
+        );
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .ussr-grid {
+      position: relative;
+      margin-top: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: center;
+      align-items: center;
+      min-height: 420px;
+    }
+
+    .republic {
+      width: 140px;
+      height: 140px;
+      border-radius: 28px;
+      background:
+        linear-gradient(145deg, rgba(193,18,31,0.35), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.35s cubic-bezier(.2,.8,.2,1);
+      text-align: center;
+      padding: 16px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+      box-shadow:
+        inset 0 0 20px rgba(255,255,255,0.03),
+        0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .republic::before {
+      content: "☭";
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-size: 0.9rem;
+      opacity: 0.25;
+      color: var(--gold);
+    }
+
+    .republic::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.08), transparent);
+      transform: translateX(-120%);
+      transition: 0.7s;
+    }
+
+    .republic:hover {
+      transform: translateY(-8px) scale(1.04) rotate(-1deg);
+      background:
+        linear-gradient(145deg, rgba(240,180,41,0.25), rgba(193,18,31,0.22));
+      color: var(--gold);
+      border-color: rgba(240,180,41,0.35);
+      box-shadow:
+        0 20px 50px rgba(193,18,31,0.3),
+        0 0 40px rgba(240,180,41,0.12);
+    }
+
+    .republic:hover::after {
+      transform: translateX(120%);
+    }
+
+    .info-panel {
+      background:
+        linear-gradient(to bottom right, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 34px;
+      padding: 34px;
+      backdrop-filter: blur(20px);
+      min-height: 640px;
+      box-shadow:
+        inset 0 0 40px rgba(255,255,255,0.02),
+        0 20px 60px rgba(0,0,0,0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-panel::before {
+      content: "ГОСУДАРСТВЕННЫЙ АРХИВ";
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      opacity: 0.12;
+      color: var(--gold);
+    }
+
+    .info-panel h3 {
+      margin-bottom: 16px;
+      font-size: 1.5rem;
+      color: var(--gold);
+    }
+
+    .terminal {
+      background: #050505;
+      border-radius: 28px;
+      border: 1px solid rgba(0,255,0,0.2);
+      padding: 30px;
+      min-height: 420px;
+      font-family: monospace;
+      color: #00ff95;
+      box-shadow: inset 0 0 30px rgba(0,255,120,0.05);
+    }
+
+    .terminal-output {
+      line-height: 1.8;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .terminal-input {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .terminal-input input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #00ff95;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .footer {
+      padding: 80px 5%;
+      text-align: center;
+      opacity: 0.6;
+      border-top: 1px solid var(--border);
+      margin-top: 80px;
+    }
+
+    @media(max-width: 1000px) {
+      .map-container {
+        grid-template-columns: 1fr;
+      }
+
+      .ussr-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media(max-width: 700px) {
+      nav {
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .ussr-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="floating-particles" id="particles"></div>
+
+<header>
+  <nav>
+    <div class="logo">СОЮЗNET</div>
+
+    <div class="nav-links">
+      <a href="#history">История</a>
+      <a href="#ads">Пропаганда</a>
+      <a href="#map">Карта</a>
+      <a href="#terminal">Терминал</a>
+      <button class="lang-btn" id="langToggle">ESPAÑOL</button>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-subtitle" data-translate="subtitle">ГОСУДАРСТВЕННАЯ СЕТЬ АРХИВОВ</div>
+
+    <h1>СОЮЗ<br>NET</h1>
+
+    <p data-translate="heroText">
+      Добро пожаловать, товарищ. Explora una reinterpretación digital y cinematográfica de la Unión Soviética: propaganda, tecnología, historia, diseño retrofuturista y gloria espacial convertidas en una experiencia web inmersiva.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="#history" class="btn" data-translate="exploreBtn">Исследовать архив</a>
+      <a href="#terminal" class="btn" data-translate="terminalBtn">Открыть терминал</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="history">
+  <h2 class="section-title" data-translate="historyTitle">Архив Союза</h2>
+  <p class="section-desc" data-translate="historyDesc">
+    Una colección interactiva inspirada en eventos, logros y símbolos históricos de la URSS reinterpretados con estética moderna Sovietwave.
+  </p>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="card-image" style="background-image:url('https://imgs.search.brave.com/n9erAjuSPUoX0Biv0kzP-G-11Kne6P0WsqAFa9dNWLU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTMy/MDQzMDExOS9waG90/by90aGUtZmlyc3Qt/YXJ0aWZpY2lhbC1l/YXJ0aC1zYXRlbGxp/dGUtc292aWV0LXVu/aW9uLXNwdXRuaWst/aS1zYXRlbGxpdGUt/aW4tb3JiaXQtYWJv/dmUtZWFydGgtb24u/anBnP3M9NjEyeDYx/MiZ3PTAmaz0yMCZj/PUM5cVJhaDhCZlJM/Zl9JeTBYbm5zUHh1/Y1J4RVEzOFY4dGxQ/TzlvNzh3anc9');"></div>
+      <div class="card-content">
+        <h3>Спутник</h3>
+        <p>El primer satélite artificial cambió la historia del planeta y convirtió el espacio en el nuevo frente del progreso soviético.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-image" style="background-image:url('https://imgs.search.brave.com/DkiF8VgJxg3SKuP57aFRFA5ew1OKCTiuLtpnfFbsx_o/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/bW9zLmNtcy5mdXR1/cmVjZG4ubmV0L2hX/TDllVVNSYlBuTWtC/Unpib0FEQ1guanBn');"></div>
+      <div class="card-content">
+        <h3>Космос</h3>
+        <p>Yuri Gagarin, estaciones espaciales, ingeniería extrema y sueños futuristas moldearon la identidad tecnológica soviética.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-image" style="background-image:url('https://imgs.search.brave.com/oULVS0U7W0PeZ_bWnDu9ghAuL4JgLpZ7puGFTwCUGuQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9haWYt/czMuYWlmLnJ1L2lt/YWdlcy8wMDYvMTAy/L2VkNmUwMzRmNjRj/NDBjZDA3Nzc2YTFl/ZTVjMzQ2MGVkLmpw/Zw');"></div>
+      <div class="card-content">
+        <h3>Метро</h3>
+        <p>Las estaciones soviéticas fueron diseñadas como palacios públicos: mármol, lámparas gigantes y arquitectura monumental.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="ads">
+  <h2 class="section-title" data-translate="adsTitle">Пропаганда</h2>
+  <p class="section-desc" data-translate="adsDesc">
+    Publicidades ficticias construidas con propaganda soviética real restaurada en una interfaz moderna e inmersiva.
+  </p>
+
+  <div class="ads-grid">
+
+    <div class="ad" style="background-image:url('https://imgs.search.brave.com/KRGHAkrGrO8EWjRmIKuZWlqSvHODf3JSVgNH5uLH3Wc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cGxha2F0LWNjY3Au/cnUvZmlsZWxpYnJh/cnkvYWRtaW5pc3Ry/YXRvcl8vcHJvbV8v/cGxha2F0LzIzNC8y/NTY3L21pZGRsZV8w/LmpwZw');">
+      <div class="ad-content">
+        <div class="ad-tag">ГОСУДАРСТВО</div>
+        <h3>ТРУД — СЛАВА НАРОДА</h3>
+        <p>La industria necesita héroes. El futuro pertenece al trabajador.</p>
+      </div>
+    </div>
+
+    <div class="ad" style="background-image:url('https://imgs.search.brave.com/Zx64tVYXVW5CuUPrqs2Ov8YvfLLdC7lQ0qI0NEdsZSQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9mbGFz/aGJhay5jb20vd3At/Y29udGVudC91cGxv/YWRzLzIwMTgvMDQv/U292aWV0c3BhY2Vw/b3N0ZXJzLTU2Lmpw/Zw');">
+      <div class="ad-content">
+        <div class="ad-tag">КОСМОС</div>
+        <h3>ПОКОРИМ ЗВЁЗДЫ</h3>
+        <p>El cosmos pertenece al pueblo soviético.</p>
+      </div>
+    </div>
+
+    <div class="ad" style="background-image:url('https://imgs.search.brave.com/oNbYptolR4PnPjUEzHW5oR3qfzFRFRLvSGH8JEHvqYU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pMC53/cC5jb20vd3d3Lnlv/dW5ncGlvbmVlcnRv/dXJzLmNvbS93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyMC8wNy9Q/b3N0ZXItNS0xLXNj/YWxlZC5qcGc_Zml0/PTEwMjQsNzE5JnNz/bD0x');">
+      <div class="ad-content">
+        <div class="ad-tag">СОЮЗNET ADS</div>
+        <h3>ВСТУПАЙ В БУДУЩЕЕ</h3>
+        <p>Conéctate a la red estatal de conocimiento y progreso.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="map">
+  <h2 class="section-title">Карта СССР</h2>
+  <p class="section-desc">
+    Explora las repúblicas soviéticas y descubre datos históricos interactivos.
+  </p>
+
+  <div class="map-container">
+
+    <div class="map">
+      <h3>Интерактивная карта</h3>
+
+      <div class="ussr-grid">
+        <div class="republic" data-info="Rusia: núcleo político, industrial y espacial de la URSS.">Россия</div>
+        <div class="republic" data-info="Ucrania: enorme potencia agrícola e industrial.">Украина</div>
+        <div class="republic" data-info="Kazajistán: cosmódromos, minería y enormes estepas.">Казахстан</div>
+        <div class="republic" data-info="Bielorrusia: fábricas, bosques y desarrollo técnico.">Беларусь</div>
+        <div class="republic" data-info="Georgia: montañas, vino y cultura única.">Грузия</div>
+        <div class="republic" data-info="Armenia: arquitectura, historia y ciencia.">Армения</div>
+        <div class="republic" data-info="Uzbekistán: seda, desiertos y ciudades históricas.">Узбекистан</div>
+        <div class="republic" data-info="Lituania: diseño urbano y costa báltica.">Литва</div>
+        <div class="republic" data-info="Letonia: puertos y modernismo soviético.">Латвия</div>
+        <div class="republic" data-info="Estonia: tecnología y arquitectura nórdica soviética.">Эстония</div>
+      </div>
+    </div>
+
+    <div class="info-panel" id="infoPanel">
+      <h3>Выберите республику</h3>
+      <p>
+        Pasa el mouse o toca una república para descubrir información histórica.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="terminal">
+  <h2 class="section-title">Терминал</h2>
+  <p class="section-desc">
+    Una terminal soviética ficticia inspirada en sistemas militares y científicos retro.
+  </p>
+
+  <div class="terminal">
+
+    <div class="terminal-output" id="terminalOutput">
+      > СОЮЗNET v2.1 conectado.<br>
+      > Escriba HELP para acceder al archivo estatal.<br>
+    </div>
+
+    <div class="terminal-input">
+      <span>></span>
+      <input type="text" id="terminalInput" placeholder="Введите команду...">
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  СОЮЗNET • Sovietwave Interactive Experience • 2026
+</footer>
+
+<script>
+
+  const particlesContainer = document.getElementById('particles');
+
+  for(let i = 0; i < 60; i++) {
+    const p = document.createElement('div');
+    p.classList.add('particle');
+
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (8 + Math.random() * 12) + 's';
+    p.style.animationDelay = Math.random() * 8 + 's';
+    p.style.opacity = Math.random();
+
+    particlesContainer.appendChild(p);
+  }
+
+  const republics = document.querySelectorAll('.republic');
+  const infoPanel = document.getElementById('infoPanel');
+
+  republics.forEach(rep => {
+    rep.addEventListener('mouseenter', () => {
+      infoPanel.innerHTML = `
+        <h3>${rep.textContent}</h3>
+        <p>${rep.dataset.info}</p>
+      `;
+    });
+  });
+
+  const terminalInput = document.getElementById('terminalInput');
+  const terminalOutput = document.getElementById('terminalOutput');
+
+  const commands = {
+    help: 'COMANDOS: help, ussr, sputnik, gagarin, glory',
+    ussr: 'СССР — Союз Советских Социалистических Республик.',
+    sputnik: 'SPUTNIK 1 lanzado en 1957.',
+    gagarin: 'Юрий Гагарин — primer humano en el espacio.',
+    glory: 'СЛАВА СОЮЗУ ☭'
+  };
+
+  terminalInput.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter') {
+      const value = terminalInput.value.toLowerCase().trim();
+
+      terminalOutput.innerHTML += `> ${value}<br>`;
+
+      if(commands[value]) {
+        terminalOutput.innerHTML += `${commands[value]}<br>`;
+      } else {
+        terminalOutput.innerHTML += `Команда не найдена.<br>`;
+      }
+
+      terminalInput.value = '';
+      terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    }
+  });
+
+  let spanish = false;
+
+  const translations = {
+    subtitle: ['ГОСУДАРСТВЕННАЯ СЕТЬ АРХИВОВ', 'RED ESTATAL DE ARCHIVOS'],
+    heroText: [
+      'Добро пожаловать, товарищ. Explora una reinterpretación digital y cinematográfica de la Unión Soviética: propaganda, tecnología, historia, diseño retrofuturista y gloria espacial convertidas en una experiencia web inmersiva.',
+      'Bienvenido, camarada. Explora una reinterpretación digital y cinematográfica de la Unión Soviética: propaganda, tecnología, historia y gloria espacial convertidas en una experiencia web inmersiva.'
+    ],
+    exploreBtn: ['Исследовать архив', 'Explorar archivo'],
+    terminalBtn: ['Открыть терминал', 'Abrir terminal'],
+    historyTitle: ['Архив Союза', 'Archivo de la Unión'],
+    historyDesc: ['Una colección interactiva inspirada en eventos, logros y símbolos históricos de la URSS reinterpretados con estética moderna Sovietwave.', 'Una colección interactiva inspirada en la URSS con estética moderna Sovietwave.'],
+    adsTitle: ['Пропаганда', 'Propaganda'],
+    adsDesc: ['Publicidades ficticias construidas con propaganda soviética real restaurada en una interfaz moderna e inmersiva.', 'Publicidad ficticia inspirada en propaganda soviética real.']
+  };
+
+  document.getElementById('langToggle').addEventListener('click', () => {
+    spanish = !spanish;
+
+    document.querySelectorAll('[data-translate]').forEach(el => {
+      const key = el.dataset.translate;
+      el.textContent = translations[key][spanish ? 1 : 0];
+    });
+
+    document.getElementById('langToggle').textContent = spanish ? 'РУССКИЙ' : 'ESPAÑOL';
+  });
+
+</script>
+
+</body>
+</html>
